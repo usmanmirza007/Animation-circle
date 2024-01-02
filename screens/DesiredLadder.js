@@ -1,14 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Animated, View, Text, StyleSheet, Dimensions, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+
 const { width, height } = Dimensions.get('window');
 const jobTitles = [
     { title: 'TITLE 1', text: "Lorem Ipsum is simply dummy text of the...", number: "03", currentLevel: false, isCurrentLevel: false },
     { title: 'TITLE 2', text: "Lorem Ipsum is simply dummy text  of the...",number :"00", currentLevel: false, isCurrentLevel: false },
     { title: 'TITLE 3', text: "Lorem Ipsum is simply dummy text of the...", number: "06 ", currentLevel: false, isCurrentLevel: false },
-    { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number:"00", currentLevel: true, isCurrentLevel: false },
-    { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "02", currentLevel: false, isCurrentLevel: true, },
+    { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number:"00", currentLevel: false, isCurrentLevel: false },
+    { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "02", currentLevel: true, isCurrentLevel: true, },
     { title: 'TITLE 6 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
 
 ];
@@ -20,22 +20,12 @@ const center = {
 
 const circleRadius = 40; // Radius of the job title circles
 const pathRadius = 140; // Radius of the entire path
-// Space between the circles along the y-axis
 
-export default function JuniorAccountannt() {
+
+export default function DesiredLadder() {
     const animValues = useRef(jobTitles.map(() => new Animated.Value(0))).current;
     const [animationComplete, setAnimationComplete] = useState(false);
-    const navigation = useNavigation(); 
 
-    const handleLevelClick = (index) => {
-        // Calculate the level based on the index
-        const totalLevels = jobTitles.length;
-        const level = totalLevels - index;
-    
-        // Navigate to the JuniorAccountantOptions screen with level and number
-        navigation.navigate('JuniorAccountantOptions', { level, number: jobTitles[index].number });
-
-    };
     useEffect(() => {
         // Function to start the animation
         const startAnimation = () => {
@@ -99,12 +89,18 @@ export default function JuniorAccountannt() {
         const titlePositionStyle = isEven ? {} : { left: 130 };
         const textPositionStyle = isEven ? {} : { left: 15 };
         const isIndexThree = index === 3;
-        const circleStyle = isIndexThree ? { backgroundColor: '#EDB749' } : {};
-        const titleTextStyle = isIndexThree ? { color: 'white' } : {};
-        const circleStyle1 = item.isCurrentLevel ? { backgroundColor: '#E7E7E7' } : {};
+        const circleStyle = isIndexThree ? { backgroundColor: 'white' } : {};
+        const titleTextStyle = isIndexThree ? { color: '#EDB749' } : {};
+        const circleStyle1 = item.isCurrentLevel ? { backgroundColor: 'white' } : {};
         
-        const numberContainerStyle = isIndexThree ? { backgroundColor: 'white' } : {};
+        const numberContainerStyle = isIndexThree ? { backgroundColor: '#EDB749' } : {};
         const textPosition = isEven ? { textAlign: 'left' } : { textAlign: 'right' };
+        const isIndexFour = index === 4;
+        const circleStyle4 = isIndexFour ? { borderColor: 'green',borderWidth:2 } : {};
+        const titleTextStyle4 = isIndexFour ? { color: 'green' } : {};
+        const numberContainerStyle4 = isIndexFour ? { backgroundColor: 'green' } : {};
+       
+
         let numberStyle = {
             fontSize: 14,
             color: index === 3 ? '#EDB749' : 'white',
@@ -112,6 +108,7 @@ export default function JuniorAccountannt() {
         if (item.title === 'TITLE 2' || item.title === 'TITLE 4') {
             numberStyle.fontSize = 1; // Set the desired font size for TITLE 2 and TITLE 4
         }
+       
         const smallCircleStyle = {
             position: 'absolute',
             alignItems:"center",
@@ -119,22 +116,26 @@ export default function JuniorAccountannt() {
             width: 8,
             height: 8,
             borderRadius: 200,
-            backgroundColor: 'black',
+            backgroundColor: 'white',
            
         };
+
 
         const currentLevelText = animationComplete && item.currentLevel ? (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
                 
                 <Text style={[styles.currentLevelText, isEven ? { left: 120 } : { left: -195 }]}>
-                    Current Level
+                    Jump Level from 
+                </Text>
+                <Text style={[styles.currentLevelText1, isEven ? { left: 120 } : { left: -195 }]}>
+                    Root Ladder
                 </Text>
                 
                 <View style={{ flexDirection: "row" }}>
-                    <View style={[{ width: 50, height: 2, backgroundColor: 'black', position: "absolute", top: 1 }, isEven ? { left: 115 } : { left: -164 }]}>
+                    <View style={[{ width: 50, height: 2, backgroundColor: '#6CC54D', position: "absolute", top: 1 ,}, isEven ? { left: 115 } : { left: -164 }]}>
 
                     </View>
-                    <View style={[{ width: 6, height: 6, borderRadius: 50, backgroundColor: 'black', position: "absolute", top: -1 }, isEven ? { left: 162 } : { left: -164 }]}></View>
+                    <View style={[{ width: 6, height: 6, borderRadius: 50, backgroundColor: '#6CC54D', position: "absolute", top: -1 }, isEven ? { left: 162 } : { left: -164 }]}></View>
                 </View>
             </View>
         ) : null;
@@ -152,18 +153,20 @@ export default function JuniorAccountannt() {
                         transform: [{ translateY }],
                     },
                     circleStyle,
-                    circleStyle1
+                    circleStyle1,
+                    circleStyle4,
                 ]}
             >
                 {currentLevelText}
                 <TouchableOpacity style={{ position: "absolute", alignItems: "center", justifyContent: "center", width: "100%", height: 65, borderRadius: 30 }}
-                 onPress={() => handleLevelClick(index)}
                 >
-                    <Text style={[styles.jobTitleText, titlePositionStyle, titleTextStyle]}>{item.title}</Text>
+                    <Text style={[styles.jobTitleText, titlePositionStyle, titleTextStyle,titleTextStyle4]}>{item.title}</Text>
                     <Text style={[styles.textStyle, textPositionStyle, textPosition]}>{item.text}</Text>
 
-                    <View style={[styles.numberContainer, numberPositionStyle, numberContainerStyle,]}>
+                    <View style={[styles.numberContainer, numberPositionStyle, numberContainerStyle,numberContainerStyle4]}>
+
                         <Text style={numberStyle} >{item.number}</Text>
+
                         {(item.title === 'TITLE 2' || item.title === 'TITLE 4') &&
                             <View style={smallCircleStyle} />
                         }
@@ -185,7 +188,7 @@ export default function JuniorAccountannt() {
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
                 <Text style={{ fontWeight: "400", fontSize: 14 }}>YOUR</Text>
-                <Text style={{ fontWeight: "700", fontSize: 25 }}>CURRENT LADDER</Text>
+                <Text style={{ fontWeight: "700", fontSize: 25 }}>DESIRED LADDER</Text>
 
             </View>
 
@@ -193,8 +196,8 @@ export default function JuniorAccountannt() {
 
             <ImageBackground resizeMode='contain' source={require('../assets/Group2.png')} style={styles.backgroundImage}>
                 <View style={{}}>
-                    <Image source={require('../assets/V1.png')} style={{ height: 35, width: 35, top: 23, left: 80 }} />
-                    <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -13, }}>JUNIOR</Text>
+                    <Image source={require('../assets/Icon5.png')} style={{ height: 35, width: 35, top: 23, left: 80 }} />
+                    <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -13, }}>SENIOR</Text>
                     <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -19, }}>ACCOUNTANT</Text>
                 </View>
             </ImageBackground>
@@ -285,8 +288,8 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     jobTitleText: {
-        fontSize: 12,
-        left: 59,
+        fontSize: 11,
+        left: 60,
         top:15,
         color: "#EDB749",
         fontWeight: "700",
@@ -312,10 +315,18 @@ const styles = StyleSheet.create({
     },
     currentLevelText: {
         position: "absolute",
-        fontSize: 12,
+        fontSize: 10,
         color: 'black',
-        top: -20,
+        top: -25,
         left: 135,
         fontWeight: "600"
     },
+    currentLevelText1: {
+      position: "absolute",
+      fontSize: 10,
+      color: 'black',
+      top: -15,
+      left: 135,
+      fontWeight: "600"
+  },
 });

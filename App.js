@@ -6,6 +6,7 @@ import Notification from './screens/Notification'
 import Wallet from './screens/Wallet';
 import CustomerSupport from './screens/CustomerSupport';
 import SeniorAccountant from './screens/SeniorAccountant';
+import JuniorAccountanntOptions from './screens/JuniorAccountantOptions';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import WorkPath from './screens/WorkPath';
 import JuniorAccountant from './screens/JuniorAccountant';
 import Options from './screens/Options';
+import DesiredLadder from './screens/DesiredLadder';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,6 +35,8 @@ const NotificationStack = () => {
         <Stack.Screen name="WorkPath" component={WorkPath} />
         <Stack.Screen name = "SeniorAccountant" component={SeniorAccountant}/>
         <Stack.Screen name = "JuniorAccountant" component={JuniorAccountant}/>
+        <Stack.Screen name = "JuniorAccountantOptions" component={JuniorAccountanntOptions}/>
+        <Stack.Screen name = "DesiredLadder" component={DesiredLadder}/>
         <Stack.Screen name = "Options" component={Options}/>
       </Stack.Navigator>
     

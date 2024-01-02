@@ -1,18 +1,19 @@
-// WorkPath.js
 import React, { useRef, useEffect, useState } from 'react';
+
 import { Animated, View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+
 const { width, height } = Dimensions.get('window');
 const jobTitles = [
     'MANAGER',
     'SENIOR ACCOUNTANT',
     'CHIEF FINANCIAL OFFICIER',
     'TEAM LEAD',
-     'CONTROLLER',
-     'JUNIOR ACCOUNTANT',
-     
+    'CONTROLLER',
+   'JUNIOR ACCOUNTANT',
+
 ];
 
 const center = {
@@ -20,20 +21,22 @@ const center = {
     y: height / 2,
 };
 
-const circleRadius = 40;
-const pathRadius = 150;
+const circleRadius = 40; const pathRadius = 150;
 
-export default function WorkPath() {
+
+const JuniorAccountanntOptions = ({ route }) => {
+    const { level, number } = route.params;
+
     const animValues = useRef(jobTitles.map(() => new Animated.Value(0))).current;
+
     const [animationComplete, setAnimationComplete] = useState(false);
     const navigation = useNavigation();
-
     useEffect(() => {
         // Function to start the animation
         const startAnimation = () => {
             Animated.stagger(
                 200,
-                animValues.map(animValue =>
+                animValues.slice(0, number).map((animValue) =>
                     Animated.spring(animValue, {
                         toValue: 1,
                         friction: 5,
@@ -41,7 +44,6 @@ export default function WorkPath() {
                     })
                 )
             ).start(() => {
-
                 setAnimationComplete(true);
             });
         };
@@ -50,57 +52,55 @@ export default function WorkPath() {
             startAnimation();
         }, 500);
 
-
         return () => clearTimeout(timeout);
-    }, []);
+    }, [animValues, number]);
     const handleJobTitlePress = (title) => {
         // You can customize this logic based on your navigation structure
-        if (title === 'SENIOR ACCOUNTANT') {
-            navigation.navigate('SeniorAccountant'); // Replace with your actual screen name
+        if (title === 'MANAGER') {
+            navigation.navigate('DesiredLadder'); // Replace with your actual screen name
         }
-        if (title === 'JUNIOR ACCOUNTANT') {
-            navigation.navigate('JuniorAccountant'); // Replace with your actual screen name
-        }
-        // Add similar logic for other job titles if needed
+        
     };
 
     const renderLine = (index) => {
+        if (index < number) {
+            const angle = (index * (360 / jobTitles.length)) - 90;
+            const rotateTransform = {
+                transform: [
+                    { translateX: -pathRadius / 3 - 10 },
+                    { rotate: `${angle}deg` },
+                    { translateX: pathRadius / 3 },
+                ],
+            };
 
-        const angle = (index * (360 / jobTitles.length)) - 90;
-        const rotateTransform = {
-            transform: [
-                { translateX: -pathRadius / 3 - 10 },
-                { rotate: `${angle}deg` },
-                { translateX: pathRadius / 3 },
-            ],
-        };
-
-        return (
-            <View
-                key={`line_${index}`}
-                style={[
-                    styles.line,
-                    rotateTransform,
-                    {
-                        zIndex: -1,
-                    }
-                ]}
-            />
-        );
+            return (
+                <View
+                    key={`line_${index}`}
+                    style={[
+                        styles.line,
+                        rotateTransform,
+                        {
+                            zIndex: -1,
+                        },
+                    ]}
+                />
+            );
+        } else {
+            return null;
+        }
     };
-
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-                <Image source={require('../assets/icon1.png')} style={{ height: 33, width: 35, top: 25, left: 24 }} />
-                <Icon name="notifications" size={20} color="black" style={{ width: 18, height: 20, top: 30, right: 24 }} />
+                <Image source={require('../assets/icon1.png')} style={{ height: 33, width: 35, top: 18, left: 24 }} />
+                <Icon name="notifications" size={20} color="black" style={{ width: 18, height: 20, top: 22, right: 24 }} />
             </View>
-            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 60 }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
+                <Text style={{ fontWeight: "400", fontSize: 14 }}>YOUR OPTIONS FROM</Text>
+                <Text style={{ fontWeight: "700", fontSize: 25 }}>JUNIOR ACCOUNTANT</Text>
 
-                <Text>SELECT</Text>
-
-                <Text style={{ fontWeight: 'bold', fontSize: 20, }}>WORK PATH</Text>
             </View>
+            <Text style={{ left: 170, fontSize: 14, fontWeight: 400 }}>Level {level}</Text>
 
             {animationComplete && jobTitles.map((_, index) => renderLine(index))}
 
@@ -113,7 +113,6 @@ export default function WorkPath() {
 
                 const y =
                     pathRadius * Math.sin(angle) + center.y - circleRadius;
-
                 return (
 
                     <TouchableOpacity
@@ -143,6 +142,7 @@ export default function WorkPath() {
                                     },
                                 ],
                             },
+                            
                         ]}
                     >
                         <Text style={styles.jobTitleText}>{title}</Text>
@@ -157,16 +157,14 @@ export default function WorkPath() {
             </View>
         </View>
     );
-
-}
-
+};
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         position: 'relative',
-        // justifyContent: 'center',
-        //alignItems: 'center',
-        backgroundColor:"white"    },
+        backgroundColor: "white"
+
+    },
     circle: {
         position: 'absolute',
         justifyContent: 'center',
@@ -179,7 +177,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        top: center.y - 190,
+        top: center.y - 205,
         left: center.x - 50,
     },
 
@@ -208,3 +206,5 @@ const styles = StyleSheet.create({
         marginLeft: -1, // Adjust based on line thickness
     },
 });
+
+export default JuniorAccountanntOptions;

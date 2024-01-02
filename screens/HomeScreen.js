@@ -2,7 +2,6 @@ import React, { useState,useEffect } from 'react';
 import { View, ImageBackground, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, FlatList, TouchableWithoutFeedback,Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Ionicons } from '@expo/vector-icons';
-import SkeletonLoader from "expo-skeleton-loader";
 
 
 const { width, height } = Dimensions.get("window");
@@ -329,22 +328,7 @@ useEffect(() => {
             </TouchableOpacity>
         </View>
         );
-    const renderSkeletonLoader = () => (
-        <SkeletonLoader boneColor="white">
-    <SkeletonLoader.Container
-      style={[{ marginTop: 5,marginLeft:40, }]}
-    >
-      <SkeletonLoader.Item
-        style={{
-          width: 300,
-          height: 220,
-          borderRadius: 50,
-          marginRight: 20,
-        }}
-      />
-    </SkeletonLoader.Container>
-  </SkeletonLoader>
-      );
+   
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -407,7 +391,7 @@ useEffect(() => {
         data={flatListData.filter(
           (item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()) && item.name === selectedCategory.title
         )}
-        renderItem={loading ? renderSkeletonLoader : renderFlatListItem}
+        renderItem={ renderFlatListItem}
         keyExtractor={(item) => item.id.toString()} // Convert id to string
         contentContainerStyle={{}}
       />
