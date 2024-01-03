@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app-coffee",
-    "slug": "app-coffee",
+    "name": "work-path",
+    "slug": "work-path",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,14 +28,14 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cea8e56f-d739-48c3-8787-c1401fd9e177"
+        "projectId": "a69202d7-d8f2-4a9b-86ab-b5ef04134ada"
       }
     },
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/cea8e56f-d739-48c3-8787-c1401fd9e177"
+      "url": "https://u.expo.dev/a69202d7-d8f2-4a9b-86ab-b5ef04134ada"
     }
   }
 }
