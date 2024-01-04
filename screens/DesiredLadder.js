@@ -1,17 +1,23 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Animated, View, Text, StyleSheet, Dimensions, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { Animated, View, Text, StyleSheet, Dimensions, Image, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
+
 const jobTitles = [
     { title: 'TITLE 1', text: "Lorem Ipsum is simply dummy text of the...", number: "03", currentLevel: false, isCurrentLevel: false },
-    { title: 'TITLE 2', text: "Lorem Ipsum is simply dummy text  of the...",number :"00", currentLevel: false, isCurrentLevel: false },
+    { title: 'TITLE 2', text: "Lorem Ipsum is simply dummy text  of the...", number: "00", currentLevel: false, isCurrentLevel: false },
     { title: 'TITLE 3', text: "Lorem Ipsum is simply dummy text of the...", number: "06 ", currentLevel: false, isCurrentLevel: false },
-    { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number:"00", currentLevel: false, isCurrentLevel: false },
-    { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "02", currentLevel: true, isCurrentLevel: true, },
+    { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number: "00", currentLevel: false, isCurrentLevel: false },
+    { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "04", currentLevel: true, isCurrentLevel: true, },
     { title: 'TITLE 6 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
-
+    { title: 'TITLE 7', text: "Lorem Ipsum is simply dummy text of the...", number: "03", currentLevel: false, isCurrentLevel: false },
+    { title: 'TITLE 8', text: "Lorem Ipsum is simply dummy text  of the...", number: "00", currentLevel: false, isCurrentLevel: false },
+    { title: 'TITLE 9', text: "Lorem Ipsum is simply dummy text of the...", number: "06 ", currentLevel: false, isCurrentLevel: false },
+   
 ];
+
 
 const center = {
     x: width / 2,
@@ -20,12 +26,22 @@ const center = {
 
 const circleRadius = 40; // Radius of the job title circles
 const pathRadius = 140; // Radius of the entire path
-
+// Space between the circles along the y-axis
 
 export default function DesiredLadder() {
     const animValues = useRef(jobTitles.map(() => new Animated.Value(0))).current;
     const [animationComplete, setAnimationComplete] = useState(false);
+    const navigation = useNavigation();
 
+    const handleLevelClick = (index) => {
+        // Calculate the level based on the index
+        const totalLevels = jobTitles.length;
+        const level = totalLevels - index;
+
+        // Navigate to the JuniorAccountantOptions screen with level and number
+        navigation.navigate('NestedLadderScreen', { level, number: jobTitles[index].number });
+
+    };
     useEffect(() => {
         // Function to start the animation
         const startAnimation = () => {
@@ -57,7 +73,7 @@ export default function DesiredLadder() {
         });
 
         const rotateTransform = {
-            transform: [{ translateY: 100 }],
+            transform: [{ translateY: 0 }],
         };
 
         const linePosition = {
@@ -92,15 +108,13 @@ export default function DesiredLadder() {
         const circleStyle = isIndexThree ? { backgroundColor: 'white' } : {};
         const titleTextStyle = isIndexThree ? { color: '#EDB749' } : {};
         const circleStyle1 = item.isCurrentLevel ? { backgroundColor: 'white' } : {};
-        
+
         const numberContainerStyle = isIndexThree ? { backgroundColor: '#EDB749' } : {};
         const textPosition = isEven ? { textAlign: 'left' } : { textAlign: 'right' };
         const isIndexFour = index === 4;
-        const circleStyle4 = isIndexFour ? { borderColor: '#6CC54D',borderWidth:2 } : {};
+        const circleStyle4 = isIndexFour ? { borderColor: '#6CC54D', borderWidth: 2 } : {};
         const titleTextStyle4 = isIndexFour ? { color: '#6CC54D' } : {};
         const numberContainerStyle4 = isIndexFour ? { backgroundColor: '#6CC54D' } : {};
-       
-
         let numberStyle = {
             fontSize: 14,
             color: index === 3 ? '#EDB749' : 'white',
@@ -108,16 +122,15 @@ export default function DesiredLadder() {
         if (item.title === 'TITLE 2' || item.title === 'TITLE 4') {
             numberStyle.fontSize = 1; // Set the desired font size for TITLE 2 and TITLE 4
         }
-       
         const smallCircleStyle = {
             position: 'absolute',
-            alignItems:"center",
-            justifyContent:"center",
+            alignItems: "center",
+            justifyContent: "center",
             width: 8,
             height: 8,
             borderRadius: 200,
             backgroundColor: 'white',
-           
+
         };
 
         const currentLevelText = animationComplete && item.currentLevel ? (
@@ -138,7 +151,6 @@ export default function DesiredLadder() {
                 </View>
             </View>
         ) : null;
-
         return (
             <Animated.View
                 key={item.title}
@@ -147,26 +159,24 @@ export default function DesiredLadder() {
                     styles.jobTitle,
                     {
                         left: isEven ? x - 100 : x - 55,
-
-                        top: circleRadius-10,
+                        top: circleRadius - 100,
                         transform: [{ translateY }],
                     },
                     circleStyle,
                     circleStyle1,
-                    circleStyle4,
+                    circleStyle4
                 ]}
             >
                 {currentLevelText}
                 <TouchableOpacity style={{ position: "absolute", alignItems: "center", justifyContent: "center", width: "100%", height: 65, borderRadius: 30 }}
+                    onPress={() => handleLevelClick(index)}
                 >
                     <Text style={[styles.jobTitleText, titlePositionStyle, titleTextStyle,titleTextStyle4]}>{item.title}</Text>
                     <Text style={[styles.textStyle, textPositionStyle, textPosition]}>{item.text}</Text>
 
                     <View style={[styles.numberContainer, numberPositionStyle, numberContainerStyle,numberContainerStyle4]}>
-
                         <Text style={numberStyle} >{item.number}</Text>
-
-                        {(item.title === 'TITLE 2' || item.title === 'TITLE 4') &&
+                        {(item.title === 'TITLE 2' || item.title === 'TITLE 4') &&  
                             <View style={smallCircleStyle} />
                         }
                     </View>
@@ -174,8 +184,6 @@ export default function DesiredLadder() {
             </Animated.View>
         );
     };
-    
-
 
     return (
         <View style={styles.container}>
@@ -186,20 +194,21 @@ export default function DesiredLadder() {
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 48 }}>
                 <Text style={{ fontWeight: "400", fontSize: 14 }}>YOUR</Text>
                 <Text style={{ fontWeight: "700", fontSize: 25 }}>DESIRED LADDER</Text>
-
             </View>
-            <View>
-            {animationComplete && jobTitles.map((_, index) => renderLine(index))}
-
             <ImageBackground resizeMode='contain' source={require('../assets/Group2.png')} style={styles.backgroundImage}>
                 <View style={{}}>
-                    <Image source={require('../assets/Icon5.png')} style={{ height: 35, width: 35, top: 23, left: 80 }} />
+                    <Image source={require('../assets/V1.png')} style={{ height: 35, width: 35, top: 23, left: 80 }} />
                     <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -13, }}>SENIOR</Text>
                     <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -19, }}>ACCOUNTANT</Text>
                 </View>
             </ImageBackground>
-            {jobTitles.map((item, index) => renderCircle(item, index))}
-            </View>
+
+            <ScrollView contentContainerStyle={{ flexGrow: 1, height: height + 250 }}>
+                {animationComplete && jobTitles.map((_, index) => renderLine(index))}
+                {jobTitles.map((item, index) => renderCircle(item, index))}
+
+            </ScrollView>
+
         </View>
     );
 }
@@ -208,26 +217,26 @@ export default function DesiredLadder() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'relative',
+
         backgroundColor: "white"
 
     },
     backgroundImage: {
-        left: 27,
+        left: 30,
         height: 95,
         width: 330,
         top: 12,
         justifyContent: 'center',
-        zIndex: 3,
+        zIndex: 1
     },
     circle: {
         position: 'absolute',
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: "center",
-        zIndex: -3
+
     },
-    
+
     jobTitle: {
         width: 230,
         height: 65,
@@ -253,7 +262,7 @@ const styles = StyleSheet.create({
         top: center.y - pathRadius / 3,
         left: center.x,
         marginTop: -1,
-        zIndex: -3
+
     },
     titleText: {
         fontWeight: 'bold',
@@ -272,9 +281,9 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     jobTitleText: {
-        fontSize: 11,
-        left: 60,
-        top:15,
+        fontSize: 12,
+        left: 59,
+        top: 15,
         color: "#EDB749",
         fontWeight: "700",
         position: "absolute",

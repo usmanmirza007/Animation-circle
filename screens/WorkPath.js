@@ -10,8 +10,8 @@ const jobTitles = [
     'SENIOR ACCOUNTANT',
     'CHIEF FINANCIAL OFFICIER',
     'TEAM LEAD',
-     'CONTROLLER',
-     'JUNIOR ACCOUNTANT',
+    'CONTROLLER',
+    'JUNIOR ACCOUNTANT',
      
 ];
 

@@ -9,7 +9,7 @@ const jobTitles = [
     { title: 'TITLE 2', text: "Lorem Ipsum is simply dummy text  of the...", number: "00", currentLevel: false, isCurrentLevel: false },
     { title: 'TITLE 3', text: "Lorem Ipsum is simply dummy text of the...", number: "06 ", currentLevel: false, isCurrentLevel: false },
     { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number: "00", currentLevel: true, isCurrentLevel: false },
-    { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "02", currentLevel: false, isCurrentLevel: true, },
+    { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "04", currentLevel: false, isCurrentLevel: true, },
     { title: 'TITLE 6 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
     { title: 'TITLE 7 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
     { title: 'TITLE 8 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
@@ -118,16 +118,20 @@ export default function CurrentLadder() {
         if (item.title === 'TITLE 2' || item.title === 'TITLE 4') {
             numberStyle.fontSize = 1; // Set the desired font size for TITLE 2 and TITLE 4
         }
-        const smallCircleStyle = {
-            position: 'absolute',
-            alignItems: "center",
-            justifyContent: "center",
-            width: 8,
-            height: 8,
-            borderRadius: 200,
-            backgroundColor: 'black',
+         const smallCircleStyle = {
+             position: 'absolute',
+             alignItems: "center",
+             justifyContent: "center",
+             width: 8,
+             height: 8,
+             borderRadius: 200,
+             backgroundColor: index === 1 ? 'white' : 'black',
 
-        };
+       };
+      
+
+
+        
 
         const currentLevelText = animationComplete && item.currentLevel ? (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -227,6 +231,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: "center",
+        
     },
 
     jobTitle: {

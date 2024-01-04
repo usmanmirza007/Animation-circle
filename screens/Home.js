@@ -9,7 +9,7 @@ const Home = ({navigation}) => {
     <View style={styles.mainContainer}>
       <StatusBar style="auto" />
       <View style={styles.square}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20, marginHorizontal: 20 }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", top: 20, marginHorizontal: 20 }}>
           <Image source={require('../assets/icon1.png')}
             style={{ height: height/20, width: width/10, }}
           />
@@ -19,16 +19,20 @@ const Home = ({navigation}) => {
           <Text>CURRENT PATH</Text>
           <Text style={{ fontWeight: "bold", fontSize: 20 }}>ACCOUNTANT</Text>
         </View>
-        <TouchableOpacity style={{ backgroundColor:"white",borderWidth:1,width:80,height:80,alignItems:"center",justifyContent:"center",borderRadius:200,left:155,top:94}}
+        </View>
+        <View style={{top:-45}}>
+        <TouchableOpacity style={{ backgroundColor:"white",borderWidth:1,width:80,height:80,alignItems:"center",justifyContent:"center",borderRadius:200,left:155,}}
         onPress={() => navigation.navigate('WorkPathScreen')} >
 
           <Icon name="arrow-down" size={30} color="black"  />
           
         </TouchableOpacity>
       </View>
-      <View style ={{alignItems:"center",justifyContent:"center"}}>
+
+      <View style={{alignItems:"center",justifyContent:"center"}}>
       <Image source={require('../assets/0.png')}
-            style={{ height: 330, width: 294,marginTop:80, }}
+      resizeMode='contain'
+            style={{ height: 250, width: 250, }}
           />
       </View>
     </View>
