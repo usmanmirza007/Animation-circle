@@ -1,16 +1,22 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Animated, View, Text, StyleSheet, Dimensions, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { Animated, View, Text, StyleSheet, Dimensions, Image, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+
 const { width, height } = Dimensions.get('window');
 const jobTitles = [
     { title: 'TITLE 1', text: "Lorem Ipsum is simply dummy text of the...", number: "03", currentLevel: false, isCurrentLevel: false },
-    { title: 'TITLE 2', text: "Lorem Ipsum is simply dummy text  of the...",number :"00", currentLevel: false, isCurrentLevel: false },
+    { title: 'TITLE 2', text: "Lorem Ipsum is simply dummy text  of the...", number: "00", currentLevel: false, isCurrentLevel: false },
     { title: 'TITLE 3', text: "Lorem Ipsum is simply dummy text of the...", number: "06 ", currentLevel: false, isCurrentLevel: false },
-    { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number:"00", currentLevel: true, isCurrentLevel: false },
+    { title: 'TITLE 4', text: "Lorem Ipsum is simply dummy text of the...", number: "00", currentLevel: true, isCurrentLevel: false },
     { title: 'TITLE 5', text: "Lorem Ipsum is simply dummy text of the...", number: "02", currentLevel: false, isCurrentLevel: true, },
     { title: 'TITLE 6 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
-
+    { title: 'TITLE 7 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
+    { title: 'TITLE 8 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
+    { title: 'TITLE 9 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
+    { title: 'TITLE 10 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
+    { title: 'TITLE 11 ', text: "Lorem Ipsum is simply dummy text of the...", number: "01", currentLevel: false, isCurrentLevel: true },
+    
 ];
 
 const center = {
@@ -22,18 +28,18 @@ const circleRadius = 40; // Radius of the job title circles
 const pathRadius = 140; // Radius of the entire path
 // Space between the circles along the y-axis
 
-export default function JuniorAccountannt() {
+export default function CurrentLadder() {
     const animValues = useRef(jobTitles.map(() => new Animated.Value(0))).current;
     const [animationComplete, setAnimationComplete] = useState(false);
-    const navigation = useNavigation(); 
+    const navigation = useNavigation();
 
     const handleLevelClick = (index) => {
         // Calculate the level based on the index
         const totalLevels = jobTitles.length;
         const level = totalLevels - index;
-    
+
         // Navigate to the JuniorAccountantOptions screen with level and number
-        navigation.navigate('JuniorAccountantOptions', { level, number: jobTitles[index].number });
+        navigation.navigate('NestedLadderScreen', { level, number: jobTitles[index].number });
 
     };
     useEffect(() => {
@@ -67,7 +73,7 @@ export default function JuniorAccountannt() {
         });
 
         const rotateTransform = {
-            transform: [{ translateY: 150 }],
+            transform: [{ translateY: 0 }],
         };
 
         const linePosition = {
@@ -102,7 +108,7 @@ export default function JuniorAccountannt() {
         const circleStyle = isIndexThree ? { backgroundColor: '#EDB749' } : {};
         const titleTextStyle = isIndexThree ? { color: 'white' } : {};
         const circleStyle1 = item.isCurrentLevel ? { backgroundColor: '#E7E7E7' } : {};
-        
+
         const numberContainerStyle = isIndexThree ? { backgroundColor: 'white' } : {};
         const textPosition = isEven ? { textAlign: 'left' } : { textAlign: 'right' };
         let numberStyle = {
@@ -114,22 +120,22 @@ export default function JuniorAccountannt() {
         }
         const smallCircleStyle = {
             position: 'absolute',
-            alignItems:"center",
-            justifyContent:"center",
+            alignItems: "center",
+            justifyContent: "center",
             width: 8,
             height: 8,
             borderRadius: 200,
             backgroundColor: 'black',
-           
+
         };
 
         const currentLevelText = animationComplete && item.currentLevel ? (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
-                
+
                 <Text style={[styles.currentLevelText, isEven ? { left: 120 } : { left: -195 }]}>
                     Current Level
                 </Text>
-                
+
                 <View style={{ flexDirection: "row" }}>
                     <View style={[{ width: 50, height: 2, backgroundColor: 'black', position: "absolute", top: 1 }, isEven ? { left: 115 } : { left: -164 }]}>
 
@@ -147,8 +153,7 @@ export default function JuniorAccountannt() {
                     styles.jobTitle,
                     {
                         left: isEven ? x - 100 : x - 55,
-
-                        top: center.y - circleRadius - 190,
+                        top: circleRadius - 100,
                         transform: [{ translateY }],
                     },
                     circleStyle,
@@ -157,7 +162,7 @@ export default function JuniorAccountannt() {
             >
                 {currentLevelText}
                 <TouchableOpacity style={{ position: "absolute", alignItems: "center", justifyContent: "center", width: "100%", height: 65, borderRadius: 30 }}
-                 onPress={() => handleLevelClick(index)}
+                    onPress={() => handleLevelClick(index)}
                 >
                     <Text style={[styles.jobTitleText, titlePositionStyle, titleTextStyle]}>{item.title}</Text>
                     <Text style={[styles.textStyle, textPositionStyle, textPosition]}>{item.text}</Text>
@@ -173,34 +178,30 @@ export default function JuniorAccountannt() {
         );
     };
 
-    { animationComplete && jobTitles.map((_, index) => renderLine(index)) }
-
-
-
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                 <Image source={require('../assets/icon1.png')} style={{ height: 33, width: 35, top: 18, left: 24 }} />
                 <Icon name="notifications" size={20} color="black" style={{ width: 18, height: 20, top: 22, right: 24 }} />
             </View>
-            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 48 }}>
                 <Text style={{ fontWeight: "400", fontSize: 14 }}>YOUR</Text>
                 <Text style={{ fontWeight: "700", fontSize: 25 }}>CURRENT LADDER</Text>
-
             </View>
-
-            {animationComplete && jobTitles.map((_, index) => renderLine(index))}
-
-            <ImageBackground resizeMode='contain' source={require('../assets/Group2.png')} style={styles.backgroundImage}>
-                <View style={{}}>
-                    <Image source={require('../assets/V1.png')} style={{ height: 35, width: 35, top: 23, left: 80 }} />
-                    <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -13, }}>JUNIOR</Text>
-                    <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -19, }}>ACCOUNTANT</Text>
-                </View>
-            </ImageBackground>
-            {jobTitles.map((item, index) => renderCircle(item, index))}
-
-
+                <ImageBackground resizeMode='contain' source={require('../assets/Group2.png')} style={styles.backgroundImage}>
+                    <View style={{}}>
+                        <Image source={require('../assets/V1.png')} style={{ height: 35, width: 35, top: 23, left: 80 }} />
+                        <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -13, }}>JUNIOR</Text>
+                        <Text style={{ color: "white", fontSize: 16, fontWeight: "700", left: 127, top: -19, }}>ACCOUNTANT</Text>
+                    </View>
+                </ImageBackground>
+                
+                <ScrollView contentContainerStyle={{ flexGrow: 1,height:height+250}}>
+                {animationComplete && jobTitles.map((_, index) => renderLine(index))}
+                {jobTitles.map((item, index) => renderCircle(item, index))}
+                
+                </ScrollView>
+                
         </View>
     );
 }
@@ -209,7 +210,7 @@ export default function JuniorAccountannt() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'relative',
+
         backgroundColor: "white"
 
     },
@@ -219,28 +220,15 @@ const styles = StyleSheet.create({
         width: 330,
         top: 12,
         justifyContent: 'center',
-        zIndex: 3,
+        zIndex: 1
     },
     circle: {
         position: 'absolute',
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: "center",
-        zIndex: -3
-
     },
-    centerCircle: {
-        width: 256,
-        height: 75,
-        borderRadius: 180,
-        justifyContent: 'center',
-        alignItems: 'center',
-        top: center.y - 369,
-        left: center.x - 178,
-        flexDirection: 'row',
-        zIndex: 3
 
-    },
     jobTitle: {
         width: 230,
         height: 65,
@@ -260,13 +248,13 @@ const styles = StyleSheet.create({
 
     line: {
         position: 'absolute',
-        height: pathRadius + 400,
+        height: pathRadius + 300,
         width: 2,
         backgroundColor: 'black',
-        top: center.y - pathRadius / 3 - 10,
+        top: center.y - pathRadius / 3,
         left: center.x,
         marginTop: -1,
-        zIndex: -3
+
     },
     titleText: {
         fontWeight: 'bold',
@@ -287,7 +275,7 @@ const styles = StyleSheet.create({
     jobTitleText: {
         fontSize: 12,
         left: 59,
-        top:15,
+        top: 15,
         color: "#EDB749",
         fontWeight: "700",
         position: "absolute",

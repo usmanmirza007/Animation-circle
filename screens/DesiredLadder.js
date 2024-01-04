@@ -57,7 +57,7 @@ export default function DesiredLadder() {
         });
 
         const rotateTransform = {
-            transform: [{ translateY: 150 }],
+            transform: [{ translateY: 100 }],
         };
 
         const linePosition = {
@@ -96,9 +96,9 @@ export default function DesiredLadder() {
         const numberContainerStyle = isIndexThree ? { backgroundColor: '#EDB749' } : {};
         const textPosition = isEven ? { textAlign: 'left' } : { textAlign: 'right' };
         const isIndexFour = index === 4;
-        const circleStyle4 = isIndexFour ? { borderColor: 'green',borderWidth:2 } : {};
-        const titleTextStyle4 = isIndexFour ? { color: 'green' } : {};
-        const numberContainerStyle4 = isIndexFour ? { backgroundColor: 'green' } : {};
+        const circleStyle4 = isIndexFour ? { borderColor: '#6CC54D',borderWidth:2 } : {};
+        const titleTextStyle4 = isIndexFour ? { color: '#6CC54D' } : {};
+        const numberContainerStyle4 = isIndexFour ? { backgroundColor: '#6CC54D' } : {};
        
 
         let numberStyle = {
@@ -119,7 +119,6 @@ export default function DesiredLadder() {
             backgroundColor: 'white',
            
         };
-
 
         const currentLevelText = animationComplete && item.currentLevel ? (
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -149,7 +148,7 @@ export default function DesiredLadder() {
                     {
                         left: isEven ? x - 100 : x - 55,
 
-                        top: center.y - circleRadius - 190,
+                        top: circleRadius-10,
                         transform: [{ translateY }],
                     },
                     circleStyle,
@@ -175,9 +174,7 @@ export default function DesiredLadder() {
             </Animated.View>
         );
     };
-
-    { animationComplete && jobTitles.map((_, index) => renderLine(index)) }
-
+    
 
 
     return (
@@ -186,12 +183,12 @@ export default function DesiredLadder() {
                 <Image source={require('../assets/icon1.png')} style={{ height: 33, width: 35, top: 18, left: 24 }} />
                 <Icon name="notifications" size={20} color="black" style={{ width: 18, height: 20, top: 22, right: 24 }} />
             </View>
-            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 48 }}>
                 <Text style={{ fontWeight: "400", fontSize: 14 }}>YOUR</Text>
                 <Text style={{ fontWeight: "700", fontSize: 25 }}>DESIRED LADDER</Text>
 
             </View>
-
+            <View>
             {animationComplete && jobTitles.map((_, index) => renderLine(index))}
 
             <ImageBackground resizeMode='contain' source={require('../assets/Group2.png')} style={styles.backgroundImage}>
@@ -202,8 +199,7 @@ export default function DesiredLadder() {
                 </View>
             </ImageBackground>
             {jobTitles.map((item, index) => renderCircle(item, index))}
-
-
+            </View>
         </View>
     );
 }
@@ -217,7 +213,7 @@ const styles = StyleSheet.create({
 
     },
     backgroundImage: {
-        left: 30,
+        left: 27,
         height: 95,
         width: 330,
         top: 12,
@@ -230,20 +226,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
         zIndex: -3
-
     },
-    centerCircle: {
-        width: 256,
-        height: 75,
-        borderRadius: 180,
-        justifyContent: 'center',
-        alignItems: 'center',
-        top: center.y - 369,
-        left: center.x - 178,
-        flexDirection: 'row',
-        zIndex: 3
-
-    },
+    
     jobTitle: {
         width: 230,
         height: 65,
@@ -263,10 +247,10 @@ const styles = StyleSheet.create({
 
     line: {
         position: 'absolute',
-        height: pathRadius + 400,
+        height: pathRadius + 300,
         width: 2,
         backgroundColor: 'black',
-        top: center.y - pathRadius / 3 - 10,
+        top: center.y - pathRadius / 3,
         left: center.x,
         marginTop: -1,
         zIndex: -3

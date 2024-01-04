@@ -17,7 +17,7 @@ const jobTitles = [
 
 const center = {
     x: width / 2,
-    y: height / 2,
+    y: height/3,
 };
 
 const circleRadius = 40;
@@ -55,13 +55,10 @@ export default function WorkPath() {
     }, []);
     const handleJobTitlePress = (title) => {
         // You can customize this logic based on your navigation structure
-        if (title === 'SENIOR ACCOUNTANT') {
-            navigation.navigate('SeniorAccountant'); // Replace with your actual screen name
-        }
         if (title === 'JUNIOR ACCOUNTANT') {
-            navigation.navigate('JuniorAccountant'); // Replace with your actual screen name
+            navigation.navigate('CurrentLadderScreen'); // Replace with your actual screen name
         }
-        // Add similar logic for other job titles if needed
+ 
     };
 
     const renderLine = (index) => {
@@ -82,7 +79,7 @@ export default function WorkPath() {
                     styles.line,
                     rotateTransform,
                     {
-                        zIndex: -1,
+                        zIndex: -3,
                     }
                 ]}
             />
@@ -90,6 +87,7 @@ export default function WorkPath() {
     };
 
     return (
+
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                 <Image source={require('../assets/icon1.png')} style={{ height: 33, width: 35, top: 25, left: 24 }} />
@@ -101,6 +99,7 @@ export default function WorkPath() {
 
                 <Text style={{ fontWeight: 'bold', fontSize: 20, }}>WORK PATH</Text>
             </View>
+            <View >
 
             {animationComplete && jobTitles.map((_, index) => renderLine(index))}
 
@@ -155,7 +154,9 @@ export default function WorkPath() {
                 <Image source={require('../assets/Circle.png')} style={{ width: 130, height: 130, borderRadius: 70 }} />
                 <Text style={styles.titleText}>ACCOUNTANT</Text>
             </View>
+            </View>
         </View>
+        
     );
 
 }
@@ -164,14 +165,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         position: 'relative',
-        // justifyContent: 'center',
-        //alignItems: 'center',
         backgroundColor:"white"    },
     circle: {
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#EDB749',
+        zIndex:-3
     },
     centerCircle: {
         width: 100,
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        top: center.y - 190,
+        top: center.y - 50,
         left: center.x - 50,
     },
 

@@ -24,7 +24,7 @@ const center = {
 const circleRadius = 40; const pathRadius = 150;
 
 
-const JuniorAccountanntOptions = ({ route }) => {
+const NestedLadder = ({ route }) => {
     const { level, number } = route.params;
 
     const animValues = useRef(jobTitles.map(() => new Animated.Value(0))).current;
@@ -57,7 +57,7 @@ const JuniorAccountanntOptions = ({ route }) => {
     const handleJobTitlePress = (title) => {
         // You can customize this logic based on your navigation structure
         if (title === 'MANAGER') {
-            navigation.navigate('DesiredLadder'); // Replace with your actual screen name
+            navigation.navigate('DesiredLadderScreen'); // Replace with your actual screen name
         }
         
     };
@@ -101,9 +101,9 @@ const JuniorAccountanntOptions = ({ route }) => {
 
             </View>
             <Text style={{ left: 170, fontSize: 14, fontWeight: 400 }}>Level {level}</Text>
-
+         
             {animationComplete && jobTitles.map((_, index) => renderLine(index))}
-
+           
             {jobTitles.map((title, index) => {
 
                 const angle =
@@ -151,10 +151,13 @@ const JuniorAccountanntOptions = ({ route }) => {
 
                 );
             })}
+        
             <View style={styles.centerCircle}>
                 <Image source={require('../assets/Circle.png')} style={{ width: 130, height: 130, borderRadius: 70 }} />
                 <Text style={styles.titleText}>ACCOUNTANT</Text>
             </View>
+        
+       
         </View>
     );
 };
@@ -207,4 +210,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default JuniorAccountanntOptions;
+export default NestedLadder;
