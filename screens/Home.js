@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, StatusBar, Image,TouchableOpacity,Dimensions } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-const { width,height } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
 
   return (
     <View style={styles.mainContainer}>
@@ -11,7 +11,7 @@ const Home = ({navigation}) => {
       <View style={styles.square}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", top: 20, marginHorizontal: 20 }}>
           <Image source={require('../assets/icon1.png')}
-            style={{ height: height/20, width: width/10, }}
+            style={{ height: height / 20, width: width / 10, }}
           />
           <Icon name="notifications" size={25} color="black" />
         </View>
@@ -19,21 +19,21 @@ const Home = ({navigation}) => {
           <Text>CURRENT PATH</Text>
           <Text style={{ fontWeight: "bold", fontSize: 20 }}>ACCOUNTANT</Text>
         </View>
-        </View>
-        <View style={{top:-45}}>
-        <TouchableOpacity style={{ backgroundColor:"white",borderWidth:1,width:80,height:80,alignItems:"center",justifyContent:"center",borderRadius:200,left:155,}}
-        onPress={() => navigation.navigate('WorkPathScreen')} >
+      </View>
+      <View style={{ top: -45 }}>
+        <TouchableOpacity style={{ backgroundColor: "white", borderWidth: 1, width: 80, height: 80, alignItems: "center", justifyContent: "center", borderRadius: 200, left: 155, }}
+          onPress={() => navigation.navigate('WorkPathScreen')} >
 
-          <Icon name="arrow-down" size={30} color="black"  />
-          
+          <Icon name="arrow-down" size={30} color="black" />
+
         </TouchableOpacity>
       </View>
 
-      <View style={{alignItems:"center",justifyContent:"center"}}>
-      <Image source={require('../assets/0.png')}
-      resizeMode='contain'
-            style={{ height: 250, width: 250, }}
-          />
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <Image source={require('../assets/0.png')}
+          resizeMode='contain'
+          style={{ height: 250, width: 250, }}
+        />
       </View>
     </View>
 
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50
   },
-  
+
 })
 
 export default Home
